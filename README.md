@@ -1,6 +1,6 @@
-# TaskAux
+# OurChat
 
-project to improve my skills with c++ and rest api http in c++. 
+New Application Mobile With KIVYMD and CrowCpp. In Order to Create a Fast and Secure Chat
 
 # how execute
 
@@ -8,7 +8,7 @@ project to improve my skills with c++ and rest api http in c++.
 ### and execute this commands
 - cmake .. && cmake --build .
 ### and run with
-- ./first_crow
+- ./ourchat
 
 # requirements c++
 
