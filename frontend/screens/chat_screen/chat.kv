@@ -1,0 +1,15 @@
+<Chat>
+
+    BoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "MDTopAppBar"
+            theme_text_color: "Custom"
+            md_bg_color: 0, .6, 1, 1
+            anchor_title: "left"
+            left_action_items: [["menu", lambda x: app.callback()]]
+
+
+        MDLabel:
+            text: "texto"
