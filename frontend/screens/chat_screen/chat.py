@@ -15,4 +15,7 @@ from kivy.core.window import Window
 
 
 class Chat(MDScreen):
-    pass
+    
+    def callback(self):
+    	print("Olá")
+

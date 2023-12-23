@@ -4,11 +4,30 @@
         orientation: "vertical"
 
         MDTopAppBar:
-            title: "MDTopAppBar"
             theme_text_color: "Custom"
             md_bg_color: 0, .6, 1, 1
             anchor_title: "left"
-            left_action_items: [["menu", lambda x: app.callback()]]
+            left_action_items: [["menu", lambda x: root.callback()]]
+
+            # MDBoxLayout:
+            #     md_bg_color: 0, 0, 0, 1
+            #     size_hint: None, None
+            #     height: self.minimum_height
+            #     width: "100dp"
+            #     pos_hint: {"center_x": .5}
+
+            BoxLayout:
+                orientation: "vertical"
+                size_hint: None, None
+                height: self.minimum_height
+                
+                FitImage:
+                    size_hint: None, None
+                    height: "40dp"
+                    width: "40dp"
+                    radius: 40
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    source: 'assets/images/dg-bg.png'
 
 
         MDLabel:
