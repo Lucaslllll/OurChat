@@ -16,7 +16,7 @@ New Application Mobile With KIVYMD and CrowCpp. In Order to Create a Fast and Se
 - sqlite3
 
 # routes create until now
-
+- after running project access localhost:18090/ to see urls avaliable
 
 
 
