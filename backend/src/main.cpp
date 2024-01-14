@@ -5,7 +5,9 @@
 
 #include "sqlite3.h"
 #include "crow.h"
-#include "db.hpp"
+
+#include "UserRoute.hpp"
+#include "UserDB.hpp"
 
 using namespace std;
 
@@ -23,23 +25,72 @@ static int callback(void* data, int argc, char** argv, char** azColName){
 
 }
 
-
-int main(int argc, char const *argv[])
-{
-	crow::SimpleApp app;
-	
-	if (argc > 1){
+void HandleWithDB(int argc, char const *argv[]){
+    if (argc > 1){
         cout << argv[1] << "\n";
         if (strcmp( argv[1], "createtables") == 0){
-            Database *data = new Database();
+            UserDB *data = new UserDB();
             data->createTableUser();
             data->closeDB();
+
+            // não esquecer também de criar
+            // a tabela message também após fazer messagedb
 
             delete data;
 
             cout << "Tables Created" << "\n";
+        }else if(strcmp( argv[1], "sqlmanipulation") == 0){
+            // MANIPULATION AND TESTING
+
+
+            cout << "to exit type /q" << "\n";
+            sqlite3 *m_db;
+            char* messageError;
+            string query = "";
+            bool looping = true;
+            int exit = sqlite3_open("sqldata.db", &m_db);
+
+            // update
+
+
+            while(looping == true){
+                getline(cin, query);
+
+                if (query == "/q"){
+                    looping = false;
+                }else{
+
+
+                    exit = sqlite3_exec(m_db, query.c_str(), callback, 0, &messageError);
+                    if (exit != SQLITE_OK) {
+                        cerr << messageError << "\n";
+                        sqlite3_free(messageError);
+
+                    }
+
+
+                }
+
+
+            }
+
+            // ia me esquecendo de fechar
+            sqlite3_free(messageError);
+            sqlite3_close(m_db);
         }
+
     }
+}
+
+
+
+int main(int argc, char const *argv[]){
+
+	crow::SimpleApp app;
+    
+    
+    HandleWithDB(argc, argv);	
+
 
 	CROW_ROUTE(app, "/")([](){
 		std::string paths = "paths = "
@@ -50,56 +101,19 @@ int main(int argc, char const *argv[])
 	});
 
 
-	CROW_ROUTE(app, "/user").methods("GET"_method, "POST"_method)([](const crow::request& req){
-		if (req.method == "POST"_method){
-            
-           	auto x = crow::json::load(req.body);
-            if(!x){
-            	return crow::response(400);
-            }
-
-            
-
-            Database *data = new Database();
-            bool posted = data->insertTableUser(x["username"].s(), x["email"].s());
-            data->closeDB();
-            delete data;
-
-            if(posted){
-            	return crow::response(200, "OK");
-            }else{
-            	return crow::response(400, "Error, Check input data");
-            }
+	// routes User
+	UserHandleLISTandPOST(app);
+	UserHandleGETandPUTandDELETE(app);
+	// end routes user
 
 
 
-        }else if(req.method == "GET"_method){
-        	crow::json::wvalue x;
-			Database *data = new Database();
-			int contador = 0;
 
-			for (auto user : data->selectTableUser()){
-				x[contador]["id"] = user.id;
-				x[contador]["username"] = user.username;
-				x[contador]["email"] = user.email;	
-
-				++contador;
-			}
-
-			delete data;
-			
-			return crow::response(x);
-        	
-        }
-
-		
-
-	});
-
-
+    // Rota WebSocket para o chat
+    
 	
 
-	app.port(18080).run();
+	app.port(18090).run();
 
 	return 0;
 }

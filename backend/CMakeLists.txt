@@ -2,12 +2,16 @@ cmake_minimum_required(VERSION 3.5)
 project("OurChat" VERSION 0.1 LANGUAGES CXX )
 
 # set the compiling flags
-set ( CMAKE_CXX_FLAGS "-Wall" )
+set ( CMAKE_CXX_FLAGS "-Wall -g" )
 
 
 ### [1] Application target
 # configura o diretório contendo os .h, assim você pode incluílos apenas com include "arquivo.h"
-include_directories( ./include )
+include_directories( include
+					 include/routes
+					 include/models
+	
+					)
 
 
 
@@ -18,7 +22,9 @@ include_directories( ./include )
 set( APP_NAME "ourchat" )
 add_executable( ${APP_NAME}
                 src/main.cpp
-                src/db.cpp
+                src/models/UserDB.cpp
+                src/routes/UserRoute.cpp
+                
                 )
 
 # define C++14 standard

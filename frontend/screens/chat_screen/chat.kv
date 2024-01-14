@@ -1,6 +1,6 @@
 <Chat>
 
-    BoxLayout:
+    MDBoxLayout:
         orientation: "vertical"
 
         MDTopAppBar:
@@ -9,26 +9,56 @@
             anchor_title: "left"
             left_action_items: [["menu", lambda x: root.callback()]]
 
-            # MDBoxLayout:
-            #     md_bg_color: 0, 0, 0, 1
-            #     size_hint: None, None
-            #     height: self.minimum_height
-            #     width: "100dp"
-            #     pos_hint: {"center_x": .5}
+            MDBoxLayout:
+                md_bg_color: 0, 0, 0, 1
+                size_hint: None, None
+                height: self.minimum_height
+                width: "100dp"
+                pos_hint: {"center_x": .5}
 
             BoxLayout:
                 orientation: "vertical"
                 size_hint: None, None
                 height: self.minimum_height
                 
-                FitImage:
-                    size_hint: None, None
-                    height: "40dp"
-                    width: "40dp"
-                    radius: 40
-                    pos_hint: {"center_x": .5, "center_y": .5}
-                    source: 'assets/images/dg-bg.png'
+                # FitImage:
+                #     size_hint: None, None
+                #     height: "40dp"
+                #     width: "40dp"
+                #     radius: 40
+                #     pos_hint: {"center_x": .5, "center_y": .5}
+                #     source: 'assets/images/dg-bg.png'
+
+
+        BoxLayout:
+            size_hint_y: 4
 
 
         MDLabel:
             text: "texto"
+            halign: "center"
+
+
+
+
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: "20dp"
+            size_hint_y: 0.5
+
+            ScrollView:
+                size_hint_x: 4
+                scroll_y: 0
+
+                MDTextField:
+                    id: chat_keyboard
+                    multiline: True
+                    height: "100dp"
+                    md_bg_color: "green"
+
+            MDIconButton:
+                id: sender_keyboard
+                size_hint_x: 1
+                md_bg_color: 1, 0, 0, 0.3
+                icon: "send"
+                on_release: pass

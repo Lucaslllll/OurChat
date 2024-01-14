@@ -14,6 +14,7 @@ Window.softinput_mode = 'below_target'
 Config.set('kivy', 'keyboard_mode', 'systemandmulti')
 Config.set('kivy', 'exit_on_escape', 'False')
 
+
 class OurChatApp(App, MDApp):
     def __init__(self, **kwargs):
         # herdará de buttonbehavior e label
@@ -45,6 +46,7 @@ class OurChatApp(App, MDApp):
 
 
     def build_app(self):
+        # self.theme_cls.theme_style = "Dark"
         return Factory.MainScreenManager()
 
 OurChatApp().run()
