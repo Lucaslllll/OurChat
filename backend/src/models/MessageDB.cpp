@@ -94,7 +94,7 @@ std::vector<MessageDB::message> MessageDB::selectTableMessage(){
 	sqlite3_stmt *stmt;
 	// int rc = sqlite3_open("sqldata.db", &m_db); desnecessário abrir novamente, já abri no construtor
 	std::string query = "SELECT * FROM MESSAGE;";
-	std::vector<messages> vector_messages;
+	std::vector<message> vector_messages;
 
 	int rc = sqlite3_prepare_v2(m_db, query.c_str(), query.length(), &stmt, nullptr);
 	if (rc != SQLITE_OK){
@@ -109,8 +109,8 @@ std::vector<MessageDB::message> MessageDB::selectTableMessage(){
 		messages.id = sqlite3_column_int(stmt, 0);
 		messages.text = (const char*)sqlite3_column_text(stmt, 1);
 		messages.created = (const char*)sqlite3_column_text(stmt, 2);
-		messages.id_receiver = sqlite_column_int(stmt, 3);
-		messages.id_sender = sqlite_column_int(stmt, 4);
+		messages.id_receiver = sqlite3_column_int(stmt, 3);
+		messages.id_sender = sqlite3_column_int(stmt, 4);
 
 		vector_messages.push_back(messages);	
 
@@ -140,8 +140,8 @@ std::vector<MessageDB::message> MessageDB::selectTableMessage(int id){
 		messages.id = sqlite3_column_int(stmt, 0);
 		messages.text = (const char*)sqlite3_column_text(stmt, 1);
 		messages.created = (const char*)sqlite3_column_text(stmt, 2);
-		messages.id_receiver = sqlite_column_int(stmt, 3);
-		messages.id_sender = sqlite_column_int(stmt, 4)
+		messages.id_receiver = sqlite3_column_int(stmt, 3);
+		messages.id_sender = sqlite3_column_int(stmt, 4);
 
 		vector_messages.push_back(messages);	
 
@@ -150,4 +150,42 @@ std::vector<MessageDB::message> MessageDB::selectTableMessage(int id){
 	sqlite3_finalize(stmt);
 
 	return vector_messages;
+}
+
+
+std::vector<MessageDB::message> MessageDB::filterMessagers(int id_receiver, int id_sender){
+	sqlite3_stmt *stmt;
+	std::string query = "SELECT * FROM MESSAGE"
+						"WHERE ID_RECEIVER='"+std::to_string(id_receiver)+"' AND ID_SENDER='"+std::to_string(id_sender)+"';";
+	std::vector<message> vector_messages;
+
+	int rc = sqlite3_prepare_v2(m_db, query.c_str(), query.length(), &stmt, nullptr);
+	if (rc != SQLITE_OK){
+		std::cerr << "Erro no SELECT \n";
+		sqlite3_finalize(stmt);
+		return vector_messages;
+	}
+
+	while((rc = sqlite3_step(stmt)) == SQLITE_ROW){
+		message messages;
+
+		messages.id = sqlite3_column_int(stmt, 0);
+		messages.text = (const char*)sqlite3_column_text(stmt, 1);
+		messages.created = (const char*)sqlite3_column_text(stmt, 2);
+		messages.id_receiver = sqlite3_column_int(stmt, 3);
+		messages.id_sender = sqlite3_column_int(stmt, 4);
+
+		vector_messages.push_back(messages);	
+
+	}
+
+	sqlite3_finalize(stmt);
+
+	return vector_messages;
+
+}
+
+
+void MessageDB::closeDB(){
+	sqlite3_close(m_db);
 }

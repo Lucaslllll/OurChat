@@ -16,7 +16,7 @@ private:
 public:
 	struct message{
 		int id;
-		std::string texto;
+		std::string text;
 		std::string created;
 		int id_receiver;
 		int id_sender;
@@ -28,11 +28,15 @@ public:
 
 	// não precisa de update
 	bool createTableMessage();
-	bool insertTableMessage(std::string text, std::string created, int id_receiver, id_sender);
+	bool insertTableMessage(std::string text, std::string created, int id_receiver, int id_sender);
 	bool removeTableMessage(int id);
 
 	std::vector<message> selectTableMessage();
 	std::vector<message> selectTableMessage(int id);
+
+	std::vector<message> filterMessagers(int id_receiver, int id_sender);
+
+	void closeDB();
 
 	
 };

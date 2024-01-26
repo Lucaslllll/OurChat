@@ -8,7 +8,7 @@
 
 
 void MessageHandleLISTandPOST(crow::SimpleApp& app);
-void MessageHandleGETandPUTandDELETE(crow::SimpleApp& app);
-
+void MessageHandleGETandDELETE(crow::SimpleApp& app);
+void MessageHandleFILTER(crow::SimpleApp& app);
 
 #endif

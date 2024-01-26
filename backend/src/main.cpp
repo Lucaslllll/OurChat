@@ -9,6 +9,9 @@
 #include "UserRoute.hpp"
 #include "UserDB.hpp"
 
+#include "MessageRoute.hpp"
+#include "MessageDB.hpp"
+
 using namespace std;
 
 
@@ -32,11 +35,12 @@ void HandleWithDB(int argc, char const *argv[]){
             UserDB *data = new UserDB();
             data->createTableUser();
             data->closeDB();
-
-            // não esquecer também de criar
-            // a tabela message também após fazer messagedb
-
             delete data;
+
+            MessageDB *data2 = new MessageDB();
+            data2->createTableMessage();
+            data2->closeDB();
+            delete data2;
 
             cout << "Tables Created" << "\n";
         }else if(strcmp( argv[1], "sqlmanipulation") == 0){
@@ -82,31 +86,38 @@ void HandleWithDB(int argc, char const *argv[]){
     }
 }
 
+void URLsSHOW(crow::SimpleApp& app){
+    CROW_ROUTE(app, "/")([](){
+        std::string paths = "paths = "
+        "[\n\n  "
+        "user/\n  user/<int>\n  "
+        "message/\n message/<int>\n"
+        "\n\n]";
+        return paths;
+    });
+}
+
+
 
 
 int main(int argc, char const *argv[]){
 
 	crow::SimpleApp app;
     
-    
+
     HandleWithDB(argc, argv);	
-
-
-	CROW_ROUTE(app, "/")([](){
-		std::string paths = "paths = "
-		"[\n\n  "
-		"user/\n  user/<int>\n  "
-		"\n\n]";
-		return paths;
-	});
+    URLsSHOW(app);
 
 
 	// routes User
 	UserHandleLISTandPOST(app);
 	UserHandleGETandPUTandDELETE(app);
-	// end routes user
+	
 
-
+    // routes Message
+    MessageHandleLISTandPOST(app);
+    MessageHandleGETandDELETE(app);
+    MessageHandleFILTER(app);
 
 
     // Rota WebSocket para o chat

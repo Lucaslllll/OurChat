@@ -23,7 +23,10 @@ set( APP_NAME "ourchat" )
 add_executable( ${APP_NAME}
                 src/main.cpp
                 src/models/UserDB.cpp
+                src/models/MessageDB.cpp
                 src/routes/UserRoute.cpp
+                src/routes/MessageRoute.cpp
+
                 
                 )
 
