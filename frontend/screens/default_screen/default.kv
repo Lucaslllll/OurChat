@@ -1,0 +1,81 @@
+<Default>
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBottomNavigation:
+            #panel_color: "#eeeaea"
+            selected_color_background: "orange"
+            text_color_active: "lightgrey"
+
+            MDBottomNavigationItem:
+                name: 'screen 1'
+                text: 'Search'
+                icon: 'search-web'
+                #badge_icon: "numeric-10"
+
+                BoxLayout:
+                    orientation: "vertical"
+
+                    ScrollView:
+                        
+                        BoxLayout:
+                            orientation: "vertical"
+                            size_hint_y: None
+                            height: self.minimum_height
+                            spacing: "30dp"
+                            padding: "10dp"
+
+                            MDTextField:
+                                hint_text: "Search"
+
+                            MDList:
+                                id: list_contacts
+
+
+
+
+
+
+
+            MDBottomNavigationItem:
+                name: 'screen 2'
+                text: 'Twitter'
+                icon: 'twitter'
+                #badge_icon: "numeric-5"
+
+                MDLabel:
+                    text: 'Twitter'
+                    halign: 'center'
+
+
+
+
+
+
+            MDBottomNavigationItem:
+                name: 'screen 3'
+                text: 'Sobre'
+                icon: 'information'
+
+                MDLabel:
+                    text: 'About'
+                    halign: 'center'
+                    
+
+
+
+<SwipeToDeleteItem>
+    size_hint_y: None
+    height: content.height
+
+    MDCardSwipeLayerBox:
+        # Content under the card.
+
+    MDCardSwipeFrontBox:
+
+        # Content of card.
+        OneLineListItem:
+            id: content
+            text: root.text
+            _no_ripple_effect: True

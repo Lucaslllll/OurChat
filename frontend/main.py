@@ -28,7 +28,7 @@ class OurChatApp(App, MDApp):
     KV_FILES = {
         os.path.join(os.getcwd(), "screens/screenmanager.kv"),
         os.path.join(os.getcwd(), "screens/chat_screen/chat.kv"),
-
+        os.path.join(os.getcwd(), "screens/default_screen/default.kv"),
 
     }
 
@@ -36,6 +36,7 @@ class OurChatApp(App, MDApp):
     CLASSES = {
         "MainScreenManager": "screens.screenmanager",
         "Chat": "screens.chat_screen.chat",
+        "Default": "screens.default_screen.default",
 
     }
 
@@ -46,7 +47,7 @@ class OurChatApp(App, MDApp):
 
 
     def build_app(self):
-        # self.theme_cls.theme_style = "Dark"
+        self.theme_cls.theme_style = "Dark"
         return Factory.MainScreenManager()
 
 OurChatApp().run()

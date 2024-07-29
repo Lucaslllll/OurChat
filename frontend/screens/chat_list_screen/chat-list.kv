@@ -1,0 +1,25 @@
+<ChatList>
+	BoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            elevation: 4
+            title: "Chats"
+            md_bg_color: 0.9, 0.5, 0.2, 1
+
+            # right_action_items:
+            #     [
+            #     ["arrow-right", root.back_to_diary()]
+            #     ]
+
+        MDScrollView:
+            scroll_timeout : 100
+
+            MDList:
+                id: idlist
+                padding: 0
+	                
+	                
+
+<ListItemCustom>:
+    on_release: root.go_chat()

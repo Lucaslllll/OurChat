@@ -62,3 +62,33 @@
                 md_bg_color: 1, 0, 0, 0.3
                 icon: "send"
                 on_release: pass
+
+
+
+
+<MessageLayout>:
+    id: box_message
+    size_hint_y: None
+    height: self.minimum_height
+    pos_hint: {"center_x": 0.6}
+    md_bg_color: 0.8, 0.8, 0.8, 1
+    radius: 10
+
+
+<Message>:
+    allow_selection: True
+    allow_copy: True
+    color: 0, 0, 0, 1
+
+<MessageOtherLayout>:
+    id: box_message
+    size_hint_y: None
+    height: self.minimum_height
+    pos_hint: {"center_x": 0.4}
+    md_bg_color: 0.1, 0.3, 0.8, 0.8
+    radius: 10
+
+
+<MessageOther>:
+    allow_selection: True
+    allow_copy: True
